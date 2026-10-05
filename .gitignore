@@ -1,0 +1,8 @@
+# WoW Client Cache and Temporary Files
+*.bak
+*.orig
+*~
+Thumbs.db
+.DS_Store
+*.swp
+*.swo

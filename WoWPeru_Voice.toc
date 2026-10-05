@@ -1,0 +1,10 @@
+## Interface: 30300
+## Title: |cff00ccffWoW Perú|r Voz
+## Notes: Sistema visual de voz espacial 3D y proximidad para WoW Perú.
+## Author: DarckRovert & WoW Perú Team
+## Version: 1.0.0
+## SavedVariablesPerCharacter: WoWPeruVozAjustes
+## X-Category: Audio & Voice
+## X-Website: https://wow-peru.lat/
+
+WoWPeru_Voice.lua

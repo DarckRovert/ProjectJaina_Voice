@@ -1,0 +1,400 @@
+--[[
+    ========================================================================
+    WoW Perú - Sistema de Voz Espacial 3D y Proximidad (WoWPeru_Voice.lua)
+    Reino: Reino Andino | Servidor: https://wow-peru.lat/
+    Motor: World of Warcraft 3.3.5a (Build 12340)
+    ========================================================================
+    Módulo de Cliente Oficial #16: Renderizado visual de actividad de voz
+    sobre placas de nombre 3D (Nameplates), retratos de unidad (UnitFrames) y
+    gestión de enlace WebRTC con el Coordinador de Audio Espacial.
+]]
+
+local ADDON_NAME = "WoWPeru_Voice"
+local VERSION = "1.0.0"
+local PREFIJO = "WP_VOICE"
+local TIEMPO_VIDA = 2.5       -- Segundos sin paquete de refresco antes de apagar altavoz
+local REFRESCO = 0.1          -- Tasa de muestreo de placas y marcos (10 Hz)
+local TAMANO_ICONO = 28
+local TEXTURA_ALTAVOZ = "Interface\\Common\\VoiceChat-Speaker"
+
+----------------------------------------------------------------------------
+--  Estado Local de Interlocutores
+----------------------------------------------------------------------------
+local hablando = {} -- [NombreJugador] = TimestampCaducidad
+
+local function EstaHablando(nombre)
+    if not nombre then return false end
+    local caduca = hablando[nombre]
+    if not caduca then return false end
+    if GetTime() > caduca then
+        hablando[nombre] = nil
+        return false
+    end
+    return true
+end
+
+----------------------------------------------------------------------------
+--  Factoría de Iconos de Altavoz (Z-Index Elevado)
+----------------------------------------------------------------------------
+local function CrearIcono(padre, tamano)
+    local capa = CreateFrame("Frame", nil, padre)
+    capa:SetWidth(tamano or TAMANO_ICONO)
+    capa:SetHeight(tamano or TAMANO_ICONO)
+    capa:SetFrameLevel(padre:GetFrameLevel() + 5)
+
+    local t = capa:CreateTexture(nil, "OVERLAY")
+    t:SetTexture(TEXTURA_ALTAVOZ)
+    t:SetAllPoints(capa)
+
+    capa:Hide()
+    return capa
+end
+
+----------------------------------------------------------------------------
+--  1. Placas de Nombre (Nameplates en Escena 3D)
+----------------------------------------------------------------------------
+local placasVistas = {}
+
+local function EsPlacaDeNombre(marco)
+    if marco:GetName() then return false end
+    local _, borde = marco:GetRegions()
+    return borde
+       and borde.GetTexture
+       and borde:GetObjectType() == "Texture"
+       and borde:GetTexture() == "Interface\\Tooltips\\Nameplate-Border"
+end
+
+local function NombreDeLaPlaca(marco)
+    local _, _, _, _, _, _, texto = marco:GetRegions()
+    if texto and texto.GetText then return texto:GetText() end
+    return nil
+end
+
+local function PrepararPlaca(marco)
+    local icono = CrearIcono(marco)
+    icono:SetPoint("BOTTOM", marco, "TOP", 0, -4)
+    placasVistas[marco] = icono
+    return icono
+end
+
+local function RepasarPlacas()
+    local hijos = { WorldFrame:GetChildren() }
+    for i = 1, #hijos do
+        local marco = hijos[i]
+        if EsPlacaDeNombre(marco) then
+            local icono = placasVistas[marco] or PrepararPlaca(marco)
+            if marco:IsShown() and EstaHablando(NombreDeLaPlaca(marco)) then
+                icono:Show()
+            else
+                icono:Hide()
+            end
+        end
+    end
+end
+
+----------------------------------------------------------------------------
+--  2. Marcos de Unidad (UnitFrames & Retratos)
+----------------------------------------------------------------------------
+local iconosUnidad = {}
+
+local function IconoDeMarco(marco, nombreMarco)
+    if not iconosUnidad[nombreMarco] then
+        local icono = CrearIcono(marco, 26)
+        local retrato = getglobal(nombreMarco .. "Portrait")
+        if nombreMarco == "PlayerFrame" then retrato = getglobal("PlayerPortrait") end
+
+        if retrato then
+            icono:SetPoint("CENTER", retrato, "TOP", 0, 4)
+        else
+            icono:SetPoint("TOPLEFT", marco, "TOPLEFT", 30, 6)
+        end
+        iconosUnidad[nombreMarco] = icono
+    end
+    return iconosUnidad[nombreMarco]
+end
+
+local resplandorLocal
+
+local function ObtenerResplandor()
+    if not resplandorLocal then
+        local capa = CreateFrame("Frame", nil, PlayerFrame)
+        capa:SetFrameLevel(PlayerFrame:GetFrameLevel() + 4)
+        capa:SetAllPoints(getglobal("PlayerPortrait") or PlayerFrame)
+
+        local t = capa:CreateTexture(nil, "OVERLAY")
+        t:SetTexture("Interface\\Buttons\\UI-ActionButton-Border")
+        t:SetBlendMode("ADD")
+        t:SetVertexColor(0.2, 0.9, 0.2)
+        t:SetPoint("CENTER", capa, "CENTER", 0, 0)
+        t:SetWidth(capa:GetWidth() * 2.1)
+        t:SetHeight(capa:GetHeight() * 2.1)
+
+        capa:Hide()
+        resplandorLocal = capa
+    end
+    return resplandorLocal
+end
+
+local function RepasarUnidad(nombreMarco, unidad)
+    local marco = getglobal(nombreMarco)
+    if not marco or not marco:IsShown() then
+        if iconosUnidad[nombreMarco] then iconosUnidad[nombreMarco]:Hide() end
+        if nombreMarco == "PlayerFrame" then ObtenerResplandor():Hide() end
+        return
+    end
+
+    local icono = IconoDeMarco(marco, nombreMarco)
+    local habla = EstaHablando(UnitName(unidad))
+    if habla then icono:Show() else icono:Hide() end
+
+    if nombreMarco == "PlayerFrame" then
+        if habla then ObtenerResplandor():Show() else ObtenerResplandor():Hide() end
+    end
+end
+
+local function RepasarMarcos()
+    RepasarUnidad("PlayerFrame", "player")
+    RepasarUnidad("TargetFrame", "target")
+
+    for i = 1, 4 do
+        RepasarUnidad("PartyMemberFrame" .. i, "party" .. i)
+    end
+
+    for i = 1, 40 do
+        local nombreMarco = "RaidGroupButton" .. i
+        if getglobal(nombreMarco) then
+            RepasarUnidad(nombreMarco, "raid" .. i)
+        end
+    end
+end
+
+----------------------------------------------------------------------------
+--  Ventana de Emparejamiento WebRTC (/voz)
+----------------------------------------------------------------------------
+local ventanaEnlace
+
+local function CrearVentanaEnlace()
+    if ventanaEnlace then return ventanaEnlace end
+
+    local f = CreateFrame("Frame", "WoWPeru_VoicePairingFrame", UIParent)
+    f:SetSize(420, 260)
+    f:SetPoint("CENTER", UIParent, "CENTER", 0, 50)
+    f:SetBackdrop({
+        bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background-Dark",
+        edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
+        tile = true, tileSize = 32, edgeSize = 32,
+        insets = { left = 11, right = 12, top = 12, bottom = 11 }
+    })
+    f:EnableMouse(true)
+    f:SetMovable(true)
+    f:RegisterForDrag("LeftButton")
+    f:SetScript("OnDragStart", f.StartMoving)
+    f:SetScript("OnDragStop", f.StopMovingOrSizing)
+    f:SetFrameStrata("DIALOG")
+    table.insert(UISpecialFrames, "WoWPeru_VoicePairingFrame")
+
+    -- Encabezado
+    local header = f:CreateTexture(nil, "ARTWORK")
+    header:SetTexture("Interface\\DialogFrame\\UI-DialogBox-Header")
+    header:SetWidth(300)
+    header:SetHeight(64)
+    header:SetPoint("TOP", f, "TOP", 0, 12)
+
+    local title = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    title:SetPoint("TOP", header, "TOP", 0, -14)
+    title:SetText("|cff00ccffWoW Perú|r — Voz Espacial")
+
+    -- Subtítulo
+    local desc = f:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    desc:SetPoint("TOP", f, "TOP", 0, -42)
+    desc:SetWidth(380)
+    desc:SetText("Comunícate en tiempo real con audio 3D por proximidad.\nAbre el enlace e ingresa tu código PIN de un solo uso:")
+
+    -- Display de PIN
+    local pinBox = f:CreateFontString("WoWPeru_VoicePINText", "OVERLAY", "GameFontNormalHuge")
+    pinBox:SetPoint("CENTER", f, "CENTER", 0, 18)
+    pinBox:SetText("|cff00ff00------|r")
+    pinBox:SetTextHeight(32)
+
+    -- EditBox con URL
+    local ebBg = CreateFrame("Frame", nil, f)
+    ebBg:SetSize(340, 28)
+    ebBg:SetPoint("CENTER", f, "CENTER", 0, -32)
+    ebBg:SetBackdrop({
+        bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+        edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+        tile = true, tileSize = 16, edgeSize = 12,
+        insets = { left = 3, right = 3, top = 3, bottom = 3 }
+    })
+    ebBg:SetBackdropColor(0, 0, 0, 0.8)
+
+    local urlEdit = CreateFrame("EditBox", "WoWPeru_VoiceURLEditBox", ebBg)
+    urlEdit:SetAllPoints(ebBg)
+    urlEdit:SetFontObject("GameFontHighlight")
+    urlEdit:SetJustifyH("CENTER")
+    urlEdit:SetAutoFocus(false)
+    urlEdit:SetText("https://wow-peru.lat/voz")
+    urlEdit:SetScript("OnEditFocusGained", function(self) self:HighlightText() end)
+    urlEdit:SetScript("OnEscapePressed", function(self) self:ClearFocus() end)
+
+    -- Nota de cabinas
+    local tip = f:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
+    tip:SetPoint("BOTTOM", f, "BOTTOM", 0, 52)
+    tip:SetWidth(380)
+    tip:SetText("|cffFFD100Tip de Cabina:|r Si tu PC no tiene micrófono, abre el link en tu celular con audífonos y habla como si estuvieras dentro del mundo.")
+
+    -- Botón Cerrar
+    local btnClose = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
+    btnClose:SetSize(110, 26)
+    btnClose:SetPoint("BOTTOM", f, "BOTTOM", 0, 18)
+    btnClose:SetText("Cerrar")
+    btnClose:SetScript("OnClick", function() f:Hide() end)
+
+    f:Hide()
+    ventanaEnlace = f
+    return f
+end
+
+local function MostrarEnlace(pin, url)
+    local v = CrearVentanaEnlace()
+    local pinFont = getglobal("WoWPeru_VoicePINText")
+    local urlEdit = getglobal("WoWPeru_VoiceURLEditBox")
+
+    if pinFont then pinFont:SetText("|cff00ff00" .. tostring(pin or "ESPERANDO") .. "|r") end
+    if urlEdit and url then urlEdit:SetText(url) end
+
+    v:Show()
+end
+
+----------------------------------------------------------------------------
+--  Recepción de Mensajes de Protocolo WP_VOICE
+----------------------------------------------------------------------------
+local function Procesar(mensaje)
+    if not mensaje then return end
+
+    -- Formato H:Nombre (Hablando)
+    local _, _, accion, nombre = string.find(mensaje, "^(%a):(.+)$")
+    if accion and nombre then
+        if accion == "H" then
+            hablando[nombre] = GetTime() + TIEMPO_VIDA
+        elseif accion == "C" then
+            hablando[nombre] = nil
+        end
+        return
+    end
+
+    -- Formato PIN:123456:https://wow-peru.lat/voz
+    local _, _, pin, url = string.find(mensaje, "^PIN:(%d+):(.+)$")
+    if pin then
+        MostrarEnlace(pin, url)
+        DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffWoW Perú Voz|r: Tu código de emparejamiento es |cff00ff00" .. pin .. "|r.")
+        return
+    end
+end
+
+----------------------------------------------------------------------------
+--  Gestión de Placas de Nombre (Ambas Facciones)
+----------------------------------------------------------------------------
+local function EncenderPlacas(avisar)
+    local ok1 = pcall(SetCVar, "nameplateShowFriends", 1)
+    local ok2 = pcall(SetCVar, "nameplateShowEnemies", 1)
+
+    pcall(function() if ShowNameplates then ShowNameplates() end end)
+    pcall(function() if ShowFriendNameplates then ShowFriendNameplates() end end)
+
+    if not (ok1 and ok2) and avisar then
+        DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffWoW Perú Voz|r: Activa las placas de nombre con |cffFFFFFFV|r y |cffFFFFFFMayus+V|r.")
+    end
+end
+
+local function AplicarAjustes(avisar)
+    if not WoWPeruVozAjustes then WoWPeruVozAjustes = {} end
+    if WoWPeruVozAjustes.yaEncendidasUnaVez then return end
+
+    if WoWPeruVozAjustes.placas == nil then
+        WoWPeruVozAjustes.placas = true
+    end
+
+    if WoWPeruVozAjustes.placas then
+        EncenderPlacas(avisar)
+        WoWPeruVozAjustes.yaEncendidasUnaVez = true
+        if avisar then
+            DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffWoW Perú Voz|r: Placas de nombre activadas para visualizar quién habla en 3D.")
+        end
+    end
+end
+
+----------------------------------------------------------------------------
+--  Bucle de Renderizado y Eventos
+----------------------------------------------------------------------------
+local motor = CreateFrame("Frame")
+local acumulado = 0
+
+motor:SetScript("OnUpdate", function()
+    acumulado = acumulado + arg1
+    if acumulado < REFRESCO then return end
+    acumulado = 0
+    RepasarPlacas()
+    RepasarMarcos()
+end)
+
+motor:RegisterEvent("CHAT_MSG_ADDON")
+motor:RegisterEvent("PLAYER_ENTERING_WORLD")
+motor:RegisterEvent("ADDON_LOADED")
+
+motor:SetScript("OnEvent", function()
+    if event == "ADDON_LOADED" then
+        if arg1 == ADDON_NAME then
+            AplicarAjustes(true)
+        end
+    elseif event == "CHAT_MSG_ADDON" then
+        if arg1 == PREFIJO then
+            Procesar(arg2)
+        end
+    elseif event == "PLAYER_ENTERING_WORLD" then
+        hablando = {}
+    end
+end)
+
+----------------------------------------------------------------------------
+--  Comandos de Barra (/voz y /wpvoz)
+----------------------------------------------------------------------------
+local function ManejarComando(argumento)
+    local arg = string.lower(argumento or "")
+
+    if arg == "placas" then
+        if not WoWPeruVozAjustes then WoWPeruVozAjustes = {} end
+        WoWPeruVozAjustes.placas = not WoWPeruVozAjustes.placas
+        if WoWPeruVozAjustes.placas then
+            EncenderPlacas(true)
+            DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffWoW Perú Voz|r: Placas de nombre |cff00ff00activadas|r.")
+        else
+            pcall(SetCVar, "nameplateShowFriends", 0)
+            pcall(SetCVar, "nameplateShowEnemies", 0)
+            DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffWoW Perú Voz|r: Placas de nombre |cffFF5555desactivadas|r.")
+        end
+        return
+    end
+
+    if arg == "test" or arg == "yo" then
+        hablando[UnitName("player")] = GetTime() + 5
+        DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffWoW Perú Voz|r: Probando altavoz en tu personaje durante 5 segundos.")
+        return
+    end
+
+    if arg == "off" then
+        hablando = {}
+        DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffWoW Perú Voz|r: Todos los indicadores de voz apagados.")
+        return
+    end
+
+    -- Por defecto: Solicita PIN al servidor y abre ventana
+    SendAddonMessage(PREFIJO, "GET_PIN", "WHISPER", UnitName("player"))
+    MostrarEnlace("SOLICITANDO...", "https://wow-peru.lat/voz")
+end
+
+SLASH_WOWPERUVOZ1 = "/voz"
+SLASH_WOWPERUVOZ2 = "/wpvoz"
+SlashCmdList["WOWPERUVOZ"] = ManejarComando
+
+DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffWoW Perú Voz|r v" .. VERSION .. " cargado. Escribe |cffFFFFFF/voz|r para conectarte.")
