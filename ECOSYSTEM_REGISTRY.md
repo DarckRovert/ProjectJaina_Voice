@@ -75,23 +75,23 @@ Ficha técnica oficial de registro en la infraestructura multi-addon de **WoW Pe
 | 10 | [WoWPeru_PrideTrace](https://github.com/DarckRovert/WoWPeru_PrideTrace) | `WoWPeru_PrideTrace` | 1.0.0 | MIT | Rastreador de combate y telemetría de eventos de orgullo en tiempo real. |
 | 11 | [WoWPeru_RaidSuite](https://github.com/DarckRovert/WoWPeru_RaidSuite) | `WoWPeru_RaidSuite` | 1.0.0 | MIT | Suite modular de herramientas analíticas para líderes de banda y oficiales. |
 | 12 | [WoWPeru_Talented](https://github.com/DarckRovert/WoWPeru_Talented) | `Talented` | 3.3.5-WP | GPL-2.0 | Árbol de talentos avanzado con soporte para plantillas y compartición. |
-| 13 | [WoWPeru_TBCBalance](https://github.com/DarckRovert/WoWPeru_TBCBalance) | `WoWPeru_TBCBalance` | 1.0.0 | MIT | Visualizador y calculadora de rebalanceo dinámico de clases TBC/WotLK. |
-| 14 | [WoWPeru_Wardrobe](https://github.com/DarckRovert/WoWPeru_Wardrobe) | `WoWPeru_Wardrobe` | 1.0.0 | MIT | Catálogo de apariencias y transfiguración 3D escalonada sin freezes. |
-| 15 | [WowPeruVisualShop](https://github.com/DarckRovert/WowPeruVisualShop) | `WowPeruVisualShop` | 1.0.0 | MIT | Tienda visual in-game de monturas, auras e indumentaria sin taints. |
-| 16 | [WoWPeru_Voice](https://github.com/DarckRovert/WoWPeru_Voice) | `WoWPeru_Voice` | 1.0.0 | MIT | Sistema de voz espacial 3D y proximidad WebRTC sincronizado con Eluna. |
+| 13 | [WoWPeru_TBCBalance](https://github.com/DarckRovert/WoWPeru_TBCBalance) | `IntiTBCBalance` | 1.0.0 | MIT | Monitor privado de balance y composición de bandas TBC para Game Masters. |
+| 14 | [WoWPeru_Wardrobe](https://github.com/DarckRovert/WoWPeru_Wardrobe) | `WoWPeru_Wardrobe` | 1.0.0 | MIT | Guardarropa, catálogo cosmético y transfiguración con backend Eluna (60_WardrobeSystem.lua). |
+| 15 | [WowPeruVisualShop](https://github.com/DarckRovert/WowPeruVisualShop) | `WowPeruVisualShop` | 1.0.1 | MIT | Tienda oficial de efectos visuales, auras y alas con backend Eluna (59_SpellVisualCatalog.lua). |
+| 16 | [WoWPeru_Voice](https://github.com/DarckRovert/WoWPeru_Voice) | `WoWPeru_Voice` | 1.0.0 | MIT | Voz espacial 3D por proximidad y vinculación WebRTC con backend Eluna (65_VoiceProximitySync.lua). |
 
-### B. Suites Comunitarias de Alto Rendimiento (`WoW_Peru_Lab\AddOns\`)
+### B. Suites Comunitarias Monorepositorio Pre-instaladas (`WoW_Peru_Lab\AddOns\`)
 
 | # | Repositorio GitHub | Carpeta Local | Versión | Tipo / Licencia | Propósito en el Ecosistema |
 |:---:|---|---|:---:|:---:|---|
-| 17 | [WoWPeru_DBM](https://github.com/DarckRovert/WoWPeru_DBM) | `DBM-Core` (Monorepo) | 3.3.5-WP | GPL-2.0 | Alertas tácticas de jefes de banda y mazmorras con sincronización de timers. |
-| 18 | [WoWPeru_GearScore](https://github.com/DarckRovert/WoWPeru_GearScore) | `GearScoreLite` (Monorepo) | 3.3.5-WP | GPL-3.0 | Evaluación instantánea de nivel de equipamiento sin saturar memoria ni CPU. |
+| 17 | [WoWPeru_DBM](https://github.com/DarckRovert/WoWPeru_DBM) | `WoWPeru_DBM` | 4.52-WP | CC BY-NC-SA 3.0 | Suite unificada de 13 módulos Deadly Boss Mods para todas las raids y mazmorras WotLK. |
+| 18 | [WoWPeru_GearScore](https://github.com/DarckRovert/WoWPeru_GearScore) | `WoWPeru_GearScore` | 3.1.16-WP | MIT / Comm. | Monorepositorio unificado de GearScore (3.1.16) y BonusScanner (5.3) sin dependencias rotas. |
 
 ---
 
-## 🔒 Estándar de Excelencia y Convivencia Arquitectónica
+## 📜 Principios de Gobernanza y Convivencia Arquitectónica
 
-1. **Cero Secuestro de Errores Globales:** Prohibido el uso de `seterrorhandler` invasivo.
-2. **Inmunidad a Taint de Blizzard:** `UnitPopupMenus` y funciones protegidas de FrameXML permanecen vírgenes.
-3. **Canales de Addon Seguros:** Todo intercambio cliente-servidor se canaliza por `WHISPER` a sí mismo (Tipo 7).
-4. **Resiliencia en Cabinas de Internet:** Optimizado para bajo consumo de memoria, almacenamiento volátil y cero congelamientos de FPS.
+1. **Inmunidad a Taint:** Prohibido modificar o enganchar `UnitPopupMenus` de Blizzard para garantizar la estabilidad de menús contextuales y addons de curación (`HealBot`, `Grid`).
+2. **Empirismo y Cero Suposiciones:** Todo cambio de protocolo o base de datos debe ser validado con inspección en disco y pruebas de red activas.
+3. **Codificación Canónica:** Todo archivo de texto debe persistirse en **UTF-8 sin BOM** con saltos de línea estrictos **LF**.
+4. **Preservación de Binarios:** Todos los assets multimedia (`.tga`, `.blp`, `.mp3`, `.ogg`, `.wav`, `.ttf`, `.m2`) se encuentran blindados mediante `.gitattributes` para evitar corrupción en transferencias Git.
