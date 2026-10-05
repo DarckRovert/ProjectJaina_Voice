@@ -77,7 +77,19 @@ local function PrepararPlaca(marco)
     return icono
 end
 
+local algunIconoEnPlaca = false
+
 local function RepasarPlacas()
+    if not next(hablando) then
+        if algunIconoEnPlaca then
+            for marco, icono in pairs(placasVistas) do
+                icono:Hide()
+            end
+            algunIconoEnPlaca = false
+        end
+        return
+    end
+
     local hijos = { WorldFrame:GetChildren() }
     for i = 1, #hijos do
         local marco = hijos[i]
@@ -85,6 +97,7 @@ local function RepasarPlacas()
             local icono = placasVistas[marco] or PrepararPlaca(marco)
             if marco:IsShown() and EstaHablando(NombreDeLaPlaca(marco)) then
                 icono:Show()
+                algunIconoEnPlaca = true
             else
                 icono:Hide()
             end
@@ -152,7 +165,21 @@ local function RepasarUnidad(nombreMarco, unidad)
     end
 end
 
+local algunIconoEnMarcos = false
+
 local function RepasarMarcos()
+    if not next(hablando) then
+        if algunIconoEnMarcos then
+            for nombreMarco, icono in pairs(iconosUnidad) do
+                icono:Hide()
+            end
+            if resplandorLocal then resplandorLocal:Hide() end
+            algunIconoEnMarcos = false
+        end
+        return
+    end
+
+    algunIconoEnMarcos = true
     RepasarUnidad("PlayerFrame", "player")
     RepasarUnidad("TargetFrame", "target")
 
@@ -317,11 +344,11 @@ local function AplicarAjustes(avisar)
 
     if WoWPeruVozAjustes.placas then
         EncenderPlacas(avisar)
-        WoWPeruVozAjustes.yaEncendidasUnaVez = true
         if avisar then
             DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffWoW Perú Voz|r: Placas de nombre activadas para visualizar quién habla en 3D.")
         end
     end
+    WoWPeruVozAjustes.yaEncendidasUnaVez = true
 end
 
 ----------------------------------------------------------------------------
@@ -377,8 +404,11 @@ local function ManejarComando(argumento)
     end
 
     if arg == "test" or arg == "yo" then
-        hablando[UnitName("player")] = GetTime() + 5
-        DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffWoW Perú Voz|r: Probando altavoz en tu personaje durante 5 segundos.")
+        local myName = UnitName("player")
+        if myName then
+            hablando[myName] = GetTime() + 5
+            DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffWoW Perú Voz|r: Probando altavoz en tu personaje durante 5 segundos.")
+        end
         return
     end
 
@@ -389,7 +419,10 @@ local function ManejarComando(argumento)
     end
 
     -- Por defecto: Solicita PIN al servidor y abre ventana
-    SendAddonMessage(PREFIJO, "GET_PIN", "WHISPER", UnitName("player"))
+    local playerName = UnitName("player")
+    if playerName then
+        SendAddonMessage(PREFIJO, "GET_PIN", "WHISPER", playerName)
+    end
     MostrarEnlace("SOLICITANDO...", "https://wow-peru.lat/voz")
 end
 
