@@ -10,7 +10,7 @@
 ]]
 
 local ADDON_NAME = "WoWPeru_Voice"
-local VERSION = "1.0.0"
+local VERSION = "1.0.1"
 local PREFIJO = "WP_VOICE"
 local TIEMPO_VIDA = 2.5       -- Segundos sin paquete de refresco antes de apagar altavoz
 local REFRESCO = 0.1          -- Tasa de muestreo de placas y marcos (10 Hz)
@@ -57,16 +57,32 @@ local placasVistas = {}
 
 local function EsPlacaDeNombre(marco)
     if marco:GetName() then return false end
-    local _, borde = marco:GetRegions()
-    return borde
-       and borde.GetTexture
-       and borde:GetObjectType() == "Texture"
-       and borde:GetTexture() == "Interface\\Tooltips\\Nameplate-Border"
+    if marco._wpVoiceIsPlate ~= nil then return marco._wpVoiceIsPlate end
+    for i = 1, select("#", marco:GetRegions()) do
+        local reg = select(i, marco:GetRegions())
+        if reg and reg.GetObjectType and reg:GetObjectType() == "Texture" then
+            local tex = reg:GetTexture()
+            if tex == "Interface\\Tooltips\\Nameplate-Border" then
+                marco._wpVoiceIsPlate = true
+                return true
+            end
+        end
+    end
+    marco._wpVoiceIsPlate = false
+    return false
 end
 
 local function NombreDeLaPlaca(marco)
-    local _, _, _, _, _, _, texto = marco:GetRegions()
-    if texto and texto.GetText then return texto:GetText() end
+    if marco._wpVoiceNameText then
+        return marco._wpVoiceNameText:GetText()
+    end
+    for i = 1, select("#", marco:GetRegions()) do
+        local reg = select(i, marco:GetRegions())
+        if reg and reg.GetObjectType and reg:GetObjectType() == "FontString" then
+            marco._wpVoiceNameText = reg
+            return reg:GetText()
+        end
+    end
     return nil
 end
 
@@ -90,10 +106,10 @@ local function RepasarPlacas()
         return
     end
 
-    local hijos = { WorldFrame:GetChildren() }
-    for i = 1, #hijos do
-        local marco = hijos[i]
-        if EsPlacaDeNombre(marco) then
+    local numHijos = WorldFrame:GetNumChildren()
+    for i = 1, numHijos do
+        local marco = select(i, WorldFrame:GetChildren())
+        if marco and EsPlacaDeNombre(marco) then
             local icono = placasVistas[marco] or PrepararPlaca(marco)
             if marco:IsShown() and EstaHablando(NombreDeLaPlaca(marco)) then
                 icono:Show()
@@ -357,8 +373,8 @@ end
 local motor = CreateFrame("Frame")
 local acumulado = 0
 
-motor:SetScript("OnUpdate", function()
-    acumulado = acumulado + arg1
+motor:SetScript("OnUpdate", function(self, elapsed)
+    acumulado = acumulado + (elapsed or arg1 or 0.1)
     if acumulado < REFRESCO then return end
     acumulado = 0
     RepasarPlacas()
@@ -369,16 +385,20 @@ motor:RegisterEvent("CHAT_MSG_ADDON")
 motor:RegisterEvent("PLAYER_ENTERING_WORLD")
 motor:RegisterEvent("ADDON_LOADED")
 
-motor:SetScript("OnEvent", function()
-    if event == "ADDON_LOADED" then
+motor:SetScript("OnEvent", function(self, evento, a1, a2, ...)
+    local ev = evento or event
+    local arg1 = a1 or arg1
+    local arg2 = a2 or arg2
+
+    if ev == "ADDON_LOADED" then
         if arg1 == ADDON_NAME then
             AplicarAjustes(true)
         end
-    elseif event == "CHAT_MSG_ADDON" then
+    elseif ev == "CHAT_MSG_ADDON" then
         if arg1 == PREFIJO then
             Procesar(arg2)
         end
-    elseif event == "PLAYER_ENTERING_WORLD" then
+    elseif ev == "PLAYER_ENTERING_WORLD" then
         hablando = {}
     end
 end)

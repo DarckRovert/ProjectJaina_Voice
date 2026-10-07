@@ -7,6 +7,22 @@ y este proyecto se adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.
 
 ---
 
+## [1.0.1] - 2026-10-05
+
+### Fixed & Optimized
+- **Nameplate Scanning O(1) & Churn Elimination:**
+  - Sustituida la asignación de tablas temporales `{ WorldFrame:GetChildren() }` en cada tick por `select(i, WorldFrame:GetChildren())` usando `GetNumChildren()`, eliminando picos de garbage collection (GC lag) en aglomeraciones de personajes.
+  - Implementado caché local de referencias en marcos (`_wpVoiceIsPlate` y `_wpVoiceNameText`), evitando re-inspección repetitiva de regiones.
+  - Detección universal de texto en placas de nombre mediante búsqueda dinámica de `FontString`, resolviendo incompatibilidad con nameplates de layouts no estándar (índices distintos de 7).
+- **Control de Eventos y Timers en Cliente:**
+  - Firmas de funciones `OnUpdate` (`self, elapsed`) y `OnEvent` (`self, event, arg1, arg2`) corregidas con fallbacks defensivos para compatibilidad total con el motor Blizzard 3.3.5a.
+- **Transición Bidireccional de Habla y Silencio en Servidor (`65_VoiceProximitySync.lua`):**
+  - Implementado cálculo de diferencias en `activeSpeakers` para emitir el evento `C:Nombre` de inmediato cuando un jugador deja de hablar, logrando apagado instantáneo de altavoces sin esperar el TTL de seguridad.
+  - Limpieza de oradores al desconectarse del mundo mediante `RegisterPlayerEvent(4)`.
+- **Resiliencia WebRTC en Backend y Frontend:**
+  - Buffer de ICE candidates asíncronos en `app.js` para evitar rechazos previos a `setRemoteDescription`.
+  - Fallback a `127.0.0.1` en el parsing de URL para WebSocket en `server.js` y comparación estricta de GUIDs.
+
 ## [1.0.0] - 2026-10-05
 
 ### Added
