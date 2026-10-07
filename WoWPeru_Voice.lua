@@ -276,7 +276,7 @@ local function CrearVentanaEnlace()
     urlEdit:SetFontObject("GameFontHighlight")
     urlEdit:SetJustifyH("CENTER")
     urlEdit:SetAutoFocus(false)
-    urlEdit:SetText("https://wow-peru.lat/voz")
+    urlEdit:SetText("https://darckrovert.github.io/WoWPeru_Voice/")
     urlEdit:SetScript("OnEditFocusGained", function(self) self:HighlightText() end)
     urlEdit:SetScript("OnEscapePressed", function(self) self:ClearFocus() end)
 
@@ -443,7 +443,7 @@ local function ManejarComando(argumento)
     if playerName then
         SendAddonMessage(PREFIJO, "GET_PIN", "WHISPER", playerName)
     end
-    MostrarEnlace("SOLICITANDO...", "https://wow-peru.lat/voz")
+    MostrarEnlace("SOLICITANDO...", "https://darckrovert.github.io/WoWPeru_Voice/")
 end
 
 SLASH_WOWPERUVOZ1 = "/voz"
