@@ -1,7 +1,7 @@
-# 🛡️ Política de Seguridad y Mitigación de Vulnerabilidades — Wanos_Voice
+# 🛡️ Política de Seguridad y Mitigación de Vulnerabilidades — ProjectJaina_Voice
 
 **Proyecto:** Ecosistema Project Jaina  
-**Repositorio:** [https://github.com/DarckRovert/Wanos_Voice](https://github.com/DarckRovert/Wanos_Voice)
+**Repositorio:** [https://github.com/DarckRovert/ProjectJaina_Voice](https://github.com/DarckRovert/ProjectJaina_Voice)
 
 ---
 
@@ -27,4 +27,4 @@ Este addon sigue estrictos principios de diseño seguro para el cliente de World
 
 Si descubres una vulnerabilidad o un exploit que afecte la estabilidad del cliente o del servidor, por favor repórtalo directamente al Staff de Project Jaina a través de los canales oficiales:
 - **Discord:** Staff Project Jaina (Ticket Privado)
-- **GitHub Issues:** [https://github.com/DarckRovert/Wanos_Voice/issues](https://github.com/DarckRovert/Wanos_Voice/issues)
+- **GitHub Issues:** [https://github.com/DarckRovert/ProjectJaina_Voice/issues](https://github.com/DarckRovert/ProjectJaina_Voice/issues)

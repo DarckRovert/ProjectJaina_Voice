@@ -1,4 +1,4 @@
-# 📜 Aviso Legal y Atribución — Wanos_Voice
+# 📜 Aviso Legal y Atribución — ProjectJaina_Voice
 
 Este proyecto incorpora código, conceptos arquitectónicos y recursos de la comunidad de desarrollo de World of Warcraft:
 
@@ -13,7 +13,7 @@ Este proyecto incorpora código, conceptos arquitectónicos y recursos de la com
 
 ## 2. Re-ingeniería, Hardening y Gobernanza (Project Jaina)
 - **Mantenimiento y Adaptación:** DarckRovert & Project Jaina Engineering Team
-- **Servidor y Ecosistema:** [Project Jaina — Project Jaina](https://projectjaina.com/)
+- **Servidor y Ecosistema:** [Project Jaina — Project Jaina](https://darckrovert.github.io/ProjectJaina_Web/)
 - **Transformaciones Arquitectónicas Implementadas:**
   1. Estandarización de protocolos de red bajo el prefijo unificado `WP_VOICE`.
   2. Sustitución de dependencias de ejecutables externos por integración nativa con el microservicio **WebRTC Proximity Hub** de Project Jaina.

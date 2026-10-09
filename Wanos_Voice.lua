@@ -9,7 +9,7 @@
     gestión de enlace WebRTC con el Coordinador de Audio Espacial.
 ]]
 
-local ADDON_NAME = "Wanos_Voice"
+local ADDON_NAME = "ProjectJaina_Voice"
 local VERSION = "1.0.1"
 local PREFIJO = "WP_VOICE"
 local TIEMPO_VIDA = 2.5       -- Segundos sin paquete de refresco antes de apagar altavoz
@@ -276,7 +276,7 @@ local function CrearVentanaEnlace()
     urlEdit:SetFontObject("GameFontHighlight")
     urlEdit:SetJustifyH("CENTER")
     urlEdit:SetAutoFocus(false)
-    urlEdit:SetText("https://darckrovert.github.io/Wanos_Voice/")
+    urlEdit:SetText("https://darckrovert.github.io/ProjectJaina_Voice/")
     urlEdit:SetScript("OnEditFocusGained", function(self) self:HighlightText() end)
     urlEdit:SetScript("OnEscapePressed", function(self) self:ClearFocus() end)
 
@@ -351,8 +351,8 @@ local function EncenderPlacas(avisar)
 end
 
 local function AplicarAjustes(avisar)
-    Wanos_Voice_Settings = Wanos_Voice_Settings or ProjectJainaVozAjustes or {}
-    ProjectJainaVozAjustes = Wanos_Voice_Settings
+    ProjectJaina_Voice_Settings = ProjectJaina_Voice_Settings or ProjectJainaVozAjustes or {}
+    ProjectJainaVozAjustes = ProjectJaina_Voice_Settings
     if ProjectJainaVozAjustes.yaEncendidasUnaVez then return end
 
     if ProjectJainaVozAjustes.placas == nil then
@@ -411,8 +411,8 @@ local function ManejarComando(argumento)
     local arg = string.lower(argumento or "")
 
     if arg == "placas" then
-        Wanos_Voice_Settings = Wanos_Voice_Settings or ProjectJainaVozAjustes or {}
-    ProjectJainaVozAjustes = Wanos_Voice_Settings
+        ProjectJaina_Voice_Settings = ProjectJaina_Voice_Settings or ProjectJainaVozAjustes or {}
+    ProjectJainaVozAjustes = ProjectJaina_Voice_Settings
         ProjectJainaVozAjustes.placas = not ProjectJainaVozAjustes.placas
         if ProjectJainaVozAjustes.placas then
             EncenderPlacas(true)
@@ -445,7 +445,7 @@ local function ManejarComando(argumento)
     if playerName then
         SendAddonMessage(PREFIJO, "GET_PIN", "WHISPER", playerName)
     end
-    MostrarEnlace("SOLICITANDO...", "https://darckrovert.github.io/Wanos_Voice/")
+    MostrarEnlace("SOLICITANDO...", "https://darckrovert.github.io/ProjectJaina_Voice/")
 end
 
 SLASH_WANOSVOZ1 = "/voz"

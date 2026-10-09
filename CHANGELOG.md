@@ -1,4 +1,4 @@
-# Changelog - Wanos_Voice
+# Changelog - ProjectJaina_Voice
 
 Todas las modificaciones notables a este proyecto serán documentadas en este archivo.
 
@@ -27,7 +27,7 @@ y este proyecto se adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.
 
 ### Added
 - **Arquitectura de Voz Espacial de Proximidad 3D:** Integración completa entre el cliente de juego (Addon), el servidor Eluna y el microservicio WebRTC SFU.
-- **Addon de Cliente Oficial (`Wanos_Voice`):**
+- **Addon de Cliente Oficial (`ProjectJaina_Voice`):**
   - Protocolo ligero de comunicación sobre Addon Messages con prefijo canónico `WP_VOICE`.
   - Detección reactiva de actividad de voz (`H:Nombre` y `C:Nombre`) con altavoces visuales 3D sobre Nameplates y marcos de unidades Blizzard (`PlayerFrame`, `TargetFrame`, `PartyMemberFrame`, `RaidGroupButton`).
   - Comando `/voz` y `/wpvoz` para generar el PIN de emparejamiento web y toggle de nameplates.

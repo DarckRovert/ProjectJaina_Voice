@@ -1,7 +1,7 @@
-# 🤖 Directrices de Ingeniería y Restricciones para Agentes IA — Wanos_Voice
+# 🤖 Directrices de Ingeniería y Restricciones para Agentes IA — ProjectJaina_Voice
 
-**Addon:** `Wanos_Voice`  
-**Repositorio Oficial:** [https://github.com/DarckRovert/Wanos_Voice](https://github.com/DarckRovert/Wanos_Voice)  
+**Addon:** `ProjectJaina_Voice`  
+**Repositorio Oficial:** [https://github.com/DarckRovert/ProjectJaina_Voice](https://github.com/DarckRovert/ProjectJaina_Voice)  
 **Motor Gráfico y Runtime:** WoW 3.3.5a WotLK (Build 12340) / Lua 5.1 (Blizzard VM)
 
 ---
