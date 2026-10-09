@@ -1,6 +1,6 @@
 # 📦 Guía de Instalación y Despliegue — Wanos_Voice
 
-[![WoW Version](https://img.shields.io/badge/WoW-3.3.5a%20(12340)-blue.svg)](https://worldofwanos.com/)
+[![WoW Version](https://img.shields.io/badge/WoW-3.3.5a%20(12340)-blue.svg)](https://projectjaina.com/)
 [![Repositorio](https://img.shields.io/badge/GitHub-DarckRovert%2FWanos_Voice-black?logo=github)](https://github.com/DarckRovert/Wanos_Voice)
 
 ## 📋 Requisitos Previos
@@ -23,7 +23,7 @@
 
 3. **Verificación de Estructura:**  
    Asegúrate de que el archivo `Wanos_Voice.toc` se encuentre directamente dentro de la carpeta del addon y no anidado en una subcarpeta redundante:  
-   `Interface\AddOns\Jaina_Voice\Wanos_Voice.toc`
+   `Interface\AddOns\ProjectJaina_Voice\Wanos_Voice.toc`
 
 4. **Activación en el Juego:**  
    - Inicia el cliente del juego o escribe `/reload` si ya estás conectado.

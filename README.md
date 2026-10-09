@@ -2,14 +2,14 @@
 
 **Versión:** 1.0.0 (WotLK 3.3.5a WebRTC Proximity Edition)  
 **Autor:** DarckRovert & Project Jaina Team  
-**Servidor Destino:** [Project Jaina](https://worldofwanos.com/) — Project Jaina  
+**Servidor Destino:** [Project Jaina](https://projectjaina.com/) — Project Jaina  
 **Entorno de Ejecución:** World of Warcraft 3.3.5a (Build 12340) | Lua 5.1 / Eluna C++  
 **Repositorio Oficial:** [DarckRovert/Wanos_Voice](https://github.com/DarckRovert/Wanos_Voice)
 
 ---
 
-[![WoW Client](https://img.shields.io/badge/WoW%20Client-3.3.5a%20(Build%2012340)-blue.svg)](https://worldofwanos.com/)
-[![Servidor](https://img.shields.io/badge/Servidor-WoW%20Perú-gold.svg)](https://worldofwanos.com/)
+[![WoW Client](https://img.shields.io/badge/WoW%20Client-3.3.5a%20(Build%2012340)-blue.svg)](https://projectjaina.com/)
+[![Servidor](https://img.shields.io/badge/Servidor-WoW%20Perú-gold.svg)](https://projectjaina.com/)
 [![Version](https://img.shields.io/badge/version-1.0.0-brightgreen.svg)](https://github.com/DarckRovert/Wanos_Voice/releases)
 [![Build Status](https://img.shields.io/badge/CI-Passing-success.svg)](https://github.com/DarckRovert/Wanos_Voice/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -43,7 +43,7 @@
 
 ### 2. 🔗 Conexión Instantánea con PIN (`/voz`)
 - Al escribir `/voz`, el addon solicita al servidor Eluna un PIN temporal de 6 dígitos.
-- Despliega una ventana modal con el enlace web oficial (`https://worldofwanos.com/voz`) y el PIN resaltado.
+- Despliega una ventana modal con el enlace web oficial (`https://projectjaina.com/voz`) y el PIN resaltado.
 - **Apto para Cabinas de Internet:** Permite abrir el enlace en un smartphone con audífonos, resolviendo el problema de PCs sin micrófono.
 
 ### 3. 🛡️ Inmunidad a Taint & Cero Falsos Positivos

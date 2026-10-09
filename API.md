@@ -1,7 +1,7 @@
 # 🔌 Especificación Técnica y API — Wanos_Voice
 
 [![GitHub](https://img.shields.io/badge/GitHub-DarckRovert%2FWanos_Voice-black?logo=github)](https://github.com/DarckRovert/Wanos_Voice)
-[![Ecosistema](https://img.shields.io/badge/Ecosistema-WoW%20Per%C3%BA%203.3.5a-gold.svg)](https://worldofwanos.com/)
+[![Ecosistema](https://img.shields.io/badge/Ecosistema-WoW%20Per%C3%BA%203.3.5a-gold.svg)](https://projectjaina.com/)
 
 ## 📌 Resumen Arquitectónico
 Sistema de comunicación por voz espacial 3D y proximidad en tiempo real basado en WebRTC para World of Warcraft 3.3.5a (Project Jaina). Calcula distancia euclidiana y ángulo tridimensional del emisor respecto al receptor.
