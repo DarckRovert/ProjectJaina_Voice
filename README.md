@@ -1,24 +1,24 @@
-# 🇵🇪 WoW Perú — Voz Espacial 3D & Proximidad (v1.0.0)
+# 🇵🇪 Project Jaina — Voz Espacial 3D & Proximidad (v1.0.0)
 
 **Versión:** 1.0.0 (WotLK 3.3.5a WebRTC Proximity Edition)  
-**Autor:** DarckRovert & WoW Perú Team  
-**Servidor Destino:** [WoW Perú](https://wow-peru.lat/) — Reino Andino  
+**Autor:** DarckRovert & Project Jaina Team  
+**Servidor Destino:** [Project Jaina](https://worldofwanos.com/) — Project Jaina  
 **Entorno de Ejecución:** World of Warcraft 3.3.5a (Build 12340) | Lua 5.1 / Eluna C++  
-**Repositorio Oficial:** [DarckRovert/WoWPeru_Voice](https://github.com/DarckRovert/WoWPeru_Voice)
+**Repositorio Oficial:** [DarckRovert/Wanos_Voice](https://github.com/DarckRovert/Wanos_Voice)
 
 ---
 
-[![WoW Client](https://img.shields.io/badge/WoW%20Client-3.3.5a%20(Build%2012340)-blue.svg)](https://wow-peru.lat/)
-[![Servidor](https://img.shields.io/badge/Servidor-WoW%20Perú-gold.svg)](https://wow-peru.lat/)
-[![Version](https://img.shields.io/badge/version-1.0.0-brightgreen.svg)](https://github.com/DarckRovert/WoWPeru_Voice/releases)
-[![Build Status](https://img.shields.io/badge/CI-Passing-success.svg)](https://github.com/DarckRovert/WoWPeru_Voice/actions)
+[![WoW Client](https://img.shields.io/badge/WoW%20Client-3.3.5a%20(Build%2012340)-blue.svg)](https://worldofwanos.com/)
+[![Servidor](https://img.shields.io/badge/Servidor-WoW%20Perú-gold.svg)](https://worldofwanos.com/)
+[![Version](https://img.shields.io/badge/version-1.0.0-brightgreen.svg)](https://github.com/DarckRovert/Wanos_Voice/releases)
+[![Build Status](https://img.shields.io/badge/CI-Passing-success.svg)](https://github.com/DarckRovert/Wanos_Voice/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
 
-## 🌟 ¿Qué es WoWPeru_Voice?
+## 🌟 ¿Qué es Wanos_Voice?
 
-**WoWPeru_Voice** es el **módulo oficial #16** del ecosistema de addons de **WoW Perú - Reino Andino**. Proporciona una interfaz visual de alta fidelidad para la comunicación de voz espacial 3D y por proximidad dentro del cliente World of Warcraft 3.3.5a (Wrath of the Lich King), sincronizada con el backend **WebRTC Proximity Hub** de WoW Perú.
+**Wanos_Voice** es el **módulo oficial #16** del ecosistema de addons de **Project Jaina - Project Jaina**. Proporciona una interfaz visual de alta fidelidad para la comunicación de voz espacial 3D y por proximidad dentro del cliente World of Warcraft 3.3.5a (Wrath of the Lich King), sincronizada con el backend **WebRTC Proximity Hub** de Project Jaina.
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -43,7 +43,7 @@
 
 ### 2. 🔗 Conexión Instantánea con PIN (`/voz`)
 - Al escribir `/voz`, el addon solicita al servidor Eluna un PIN temporal de 6 dígitos.
-- Despliega una ventana modal con el enlace web oficial (`https://wow-peru.lat/voz`) y el PIN resaltado.
+- Despliega una ventana modal con el enlace web oficial (`https://worldofwanos.com/voz`) y el PIN resaltado.
 - **Apto para Cabinas de Internet:** Permite abrir el enlace en un smartphone con audífonos, resolviendo el problema de PCs sin micrófono.
 
 ### 3. 🛡️ Inmunidad a Taint & Cero Falsos Positivos
@@ -67,19 +67,19 @@
 
 1. Descarga o clona este repositorio:
    ```bash
-   git clone https://github.com/DarckRovert/WoWPeru_Voice.git
+   git clone https://github.com/DarckRovert/Wanos_Voice.git
    ```
 2. Mueve la carpeta a tu directorio de juego:
    ```
-   World of Warcraft/Interface/AddOns/WoWPeru_Voice/
+   World of Warcraft/Interface/AddOns/Wanos_Voice/
    ```
 3. Verifica que la ruta contenga directamente:
-   - `WoWPeru_Voice.toc`
-   - `WoWPeru_Voice.lua`
+   - `Wanos_Voice.toc`
+   - `Wanos_Voice.lua`
 
 ---
 
 ## ⚖️ Licencia
 
 Distribuido bajo la **Licencia MIT**. Consulta [LICENSE](LICENSE) para más detalles.  
-Copyright (c) 2026 DarckRovert & WoW Perú Team.
+Copyright (c) 2026 DarckRovert & Project Jaina Team.

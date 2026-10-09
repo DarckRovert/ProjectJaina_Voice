@@ -1,0 +1,10 @@
+## Interface: 30300
+## Title: |cff00ccffProject Jaina|r Voz
+## Notes: Sistema visual de voz espacial 3D y proximidad para Project Jaina.
+## Author: DarckRovert & Project Jaina Team
+## Version: 1.0.1
+## SavedVariablesPerCharacter: Wanos_Voice_Settings
+## X-Category: Audio & Voice
+## X-Website: https://worldofwanos.com/
+
+Wanos_Voice.lua

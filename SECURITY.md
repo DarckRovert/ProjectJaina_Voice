@@ -1,7 +1,7 @@
-# 🛡️ Política de Seguridad y Mitigación de Vulnerabilidades — WoWPeru_Voice
+# 🛡️ Política de Seguridad y Mitigación de Vulnerabilidades — Wanos_Voice
 
-**Proyecto:** Ecosistema WoW Perú  
-**Repositorio:** [https://github.com/DarckRovert/WoWPeru_Voice](https://github.com/DarckRovert/WoWPeru_Voice)
+**Proyecto:** Ecosistema Project Jaina  
+**Repositorio:** [https://github.com/DarckRovert/Wanos_Voice](https://github.com/DarckRovert/Wanos_Voice)
 
 ---
 
@@ -25,6 +25,6 @@ Este addon sigue estrictos principios de diseño seguro para el cliente de World
 
 ## 🚨 Reporte de Vulnerabilidades
 
-Si descubres una vulnerabilidad o un exploit que afecte la estabilidad del cliente o del servidor, por favor repórtalo directamente al Staff de WoW Perú a través de los canales oficiales:
-- **Discord:** Staff WoW Perú (Ticket Privado)
-- **GitHub Issues:** [https://github.com/DarckRovert/WoWPeru_Voice/issues](https://github.com/DarckRovert/WoWPeru_Voice/issues)
+Si descubres una vulnerabilidad o un exploit que afecte la estabilidad del cliente o del servidor, por favor repórtalo directamente al Staff de Project Jaina a través de los canales oficiales:
+- **Discord:** Staff Project Jaina (Ticket Privado)
+- **GitHub Issues:** [https://github.com/DarckRovert/Wanos_Voice/issues](https://github.com/DarckRovert/Wanos_Voice/issues)

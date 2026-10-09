@@ -1,7 +1,7 @@
 --[[
     ========================================================================
-    WoW Perú - Sistema de Voz Espacial 3D y Proximidad (WoWPeru_Voice.lua)
-    Reino: Reino Andino | Servidor: https://wow-peru.lat/
+    Project Jaina - Sistema de Voz Espacial 3D y Proximidad (ProjectJaina_Voice.lua)
+    Reino: Project Jaina | Servidor: Project Jaina Oficial
     Motor: World of Warcraft 3.3.5a (Build 12340)
     ========================================================================
     Módulo de Cliente Oficial #16: Renderizado visual de actividad de voz
@@ -9,7 +9,7 @@
     gestión de enlace WebRTC con el Coordinador de Audio Espacial.
 ]]
 
-local ADDON_NAME = "WoWPeru_Voice"
+local ADDON_NAME = "Wanos_Voice"
 local VERSION = "1.0.1"
 local PREFIJO = "WP_VOICE"
 local TIEMPO_VIDA = 2.5       -- Segundos sin paquete de refresco antes de apagar altavoz
@@ -219,7 +219,7 @@ local ventanaEnlace
 local function CrearVentanaEnlace()
     if ventanaEnlace then return ventanaEnlace end
 
-    local f = CreateFrame("Frame", "WoWPeru_VoicePairingFrame", UIParent)
+    local f = CreateFrame("Frame", "ProjectJaina_VoicePairingFrame", UIParent)
     f:SetSize(420, 260)
     f:SetPoint("CENTER", UIParent, "CENTER", 0, 50)
     f:SetBackdrop({
@@ -234,7 +234,7 @@ local function CrearVentanaEnlace()
     f:SetScript("OnDragStart", f.StartMoving)
     f:SetScript("OnDragStop", f.StopMovingOrSizing)
     f:SetFrameStrata("DIALOG")
-    table.insert(UISpecialFrames, "WoWPeru_VoicePairingFrame")
+    table.insert(UISpecialFrames, "ProjectJaina_VoicePairingFrame")
 
     -- Encabezado
     local header = f:CreateTexture(nil, "ARTWORK")
@@ -245,7 +245,7 @@ local function CrearVentanaEnlace()
 
     local title = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     title:SetPoint("TOP", header, "TOP", 0, -14)
-    title:SetText("|cff00ccffWoW Perú|r — Voz Espacial")
+    title:SetText("|cff00ccffProject Jaina|r — Voz Espacial")
 
     -- Subtítulo
     local desc = f:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
@@ -254,7 +254,7 @@ local function CrearVentanaEnlace()
     desc:SetText("Comunícate en tiempo real con audio 3D por proximidad.\nAbre el enlace e ingresa tu código PIN de un solo uso:")
 
     -- Display de PIN
-    local pinBox = f:CreateFontString("WoWPeru_VoicePINText", "OVERLAY", "GameFontNormalHuge")
+    local pinBox = f:CreateFontString("ProjectJaina_VoicePINText", "OVERLAY", "GameFontNormalHuge")
     pinBox:SetPoint("CENTER", f, "CENTER", 0, 18)
     pinBox:SetText("|cff00ff00------|r")
     pinBox:SetTextHeight(32)
@@ -271,12 +271,12 @@ local function CrearVentanaEnlace()
     })
     ebBg:SetBackdropColor(0, 0, 0, 0.8)
 
-    local urlEdit = CreateFrame("EditBox", "WoWPeru_VoiceURLEditBox", ebBg)
+    local urlEdit = CreateFrame("EditBox", "ProjectJaina_VoiceURLEditBox", ebBg)
     urlEdit:SetAllPoints(ebBg)
     urlEdit:SetFontObject("GameFontHighlight")
     urlEdit:SetJustifyH("CENTER")
     urlEdit:SetAutoFocus(false)
-    urlEdit:SetText("https://darckrovert.github.io/WoWPeru_Voice/")
+    urlEdit:SetText("https://darckrovert.github.io/Wanos_Voice/")
     urlEdit:SetScript("OnEditFocusGained", function(self) self:HighlightText() end)
     urlEdit:SetScript("OnEscapePressed", function(self) self:ClearFocus() end)
 
@@ -300,8 +300,8 @@ end
 
 local function MostrarEnlace(pin, url)
     local v = CrearVentanaEnlace()
-    local pinFont = getglobal("WoWPeru_VoicePINText")
-    local urlEdit = getglobal("WoWPeru_VoiceURLEditBox")
+    local pinFont = getglobal("ProjectJaina_VoicePINText")
+    local urlEdit = getglobal("ProjectJaina_VoiceURLEditBox")
 
     if pinFont then pinFont:SetText("|cff00ff00" .. tostring(pin or "ESPERANDO") .. "|r") end
     if urlEdit and url then urlEdit:SetText(url) end
@@ -326,11 +326,11 @@ local function Procesar(mensaje)
         return
     end
 
-    -- Formato PIN:123456:https://wow-peru.lat/voz
+    -- Formato PIN:123456:Project Jaina Oficialvoz
     local _, _, pin, url = string.find(mensaje, "^PIN:(%d+):(.+)$")
     if pin then
         MostrarEnlace(pin, url)
-        DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffWoW Perú Voz|r: Tu código de emparejamiento es |cff00ff00" .. pin .. "|r.")
+        DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffProject Jaina Voz|r: Tu código de emparejamiento es |cff00ff00" .. pin .. "|r.")
         return
     end
 end
@@ -346,25 +346,26 @@ local function EncenderPlacas(avisar)
     pcall(function() if ShowFriendNameplates then ShowFriendNameplates() end end)
 
     if not (ok1 and ok2) and avisar then
-        DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffWoW Perú Voz|r: Activa las placas de nombre con |cffFFFFFFV|r y |cffFFFFFFMayus+V|r.")
+        DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffProject Jaina Voz|r: Activa las placas de nombre con |cffFFFFFFV|r y |cffFFFFFFMayus+V|r.")
     end
 end
 
 local function AplicarAjustes(avisar)
-    if not WoWPeruVozAjustes then WoWPeruVozAjustes = {} end
-    if WoWPeruVozAjustes.yaEncendidasUnaVez then return end
+    Wanos_Voice_Settings = Wanos_Voice_Settings or ProjectJainaVozAjustes or {}
+    ProjectJainaVozAjustes = Wanos_Voice_Settings
+    if ProjectJainaVozAjustes.yaEncendidasUnaVez then return end
 
-    if WoWPeruVozAjustes.placas == nil then
-        WoWPeruVozAjustes.placas = true
+    if ProjectJainaVozAjustes.placas == nil then
+        ProjectJainaVozAjustes.placas = true
     end
 
-    if WoWPeruVozAjustes.placas then
+    if ProjectJainaVozAjustes.placas then
         EncenderPlacas(avisar)
         if avisar then
-            DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffWoW Perú Voz|r: Placas de nombre activadas para visualizar quién habla en 3D.")
+            DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffProject Jaina Voz|r: Placas de nombre activadas para visualizar quién habla en 3D.")
         end
     end
-    WoWPeruVozAjustes.yaEncendidasUnaVez = true
+    ProjectJainaVozAjustes.yaEncendidasUnaVez = true
 end
 
 ----------------------------------------------------------------------------
@@ -391,7 +392,7 @@ motor:SetScript("OnEvent", function(self, evento, a1, a2, ...)
     local arg2 = a2 or arg2
 
     if ev == "ADDON_LOADED" then
-        if arg1 == ADDON_NAME then
+        if arg1 == ADDON_NAME or arg1 == "ProjectJaina_Voice" then
             AplicarAjustes(true)
         end
     elseif ev == "CHAT_MSG_ADDON" then
@@ -410,15 +411,16 @@ local function ManejarComando(argumento)
     local arg = string.lower(argumento or "")
 
     if arg == "placas" then
-        if not WoWPeruVozAjustes then WoWPeruVozAjustes = {} end
-        WoWPeruVozAjustes.placas = not WoWPeruVozAjustes.placas
-        if WoWPeruVozAjustes.placas then
+        Wanos_Voice_Settings = Wanos_Voice_Settings or ProjectJainaVozAjustes or {}
+    ProjectJainaVozAjustes = Wanos_Voice_Settings
+        ProjectJainaVozAjustes.placas = not ProjectJainaVozAjustes.placas
+        if ProjectJainaVozAjustes.placas then
             EncenderPlacas(true)
-            DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffWoW Perú Voz|r: Placas de nombre |cff00ff00activadas|r.")
+            DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffProject Jaina Voz|r: Placas de nombre |cff00ff00activadas|r.")
         else
             pcall(SetCVar, "nameplateShowFriends", 0)
             pcall(SetCVar, "nameplateShowEnemies", 0)
-            DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffWoW Perú Voz|r: Placas de nombre |cffFF5555desactivadas|r.")
+            DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffProject Jaina Voz|r: Placas de nombre |cffFF5555desactivadas|r.")
         end
         return
     end
@@ -427,14 +429,14 @@ local function ManejarComando(argumento)
         local myName = UnitName("player")
         if myName then
             hablando[myName] = GetTime() + 5
-            DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffWoW Perú Voz|r: Probando altavoz en tu personaje durante 5 segundos.")
+            DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffProject Jaina Voz|r: Probando altavoz en tu personaje durante 5 segundos.")
         end
         return
     end
 
     if arg == "off" then
         hablando = {}
-        DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffWoW Perú Voz|r: Todos los indicadores de voz apagados.")
+        DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffProject Jaina Voz|r: Todos los indicadores de voz apagados.")
         return
     end
 
@@ -443,11 +445,12 @@ local function ManejarComando(argumento)
     if playerName then
         SendAddonMessage(PREFIJO, "GET_PIN", "WHISPER", playerName)
     end
-    MostrarEnlace("SOLICITANDO...", "https://darckrovert.github.io/WoWPeru_Voice/")
+    MostrarEnlace("SOLICITANDO...", "https://darckrovert.github.io/Wanos_Voice/")
 end
 
-SLASH_WOWPERUVOZ1 = "/voz"
-SLASH_WOWPERUVOZ2 = "/wpvoz"
-SlashCmdList["WOWPERUVOZ"] = ManejarComando
+SLASH_WANOSVOZ1 = "/voz"
+SLASH_WANOSVOZ2 = "/wanosvoz"
+SLASH_WANOSVOZ3 = "/wpvoz"
+SlashCmdList["WANOSVOZ"] = ManejarComando
 
-DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffWoW Perú Voz|r v" .. VERSION .. " cargado. Escribe |cffFFFFFF/voz|r para conectarte.")
+DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffProject Jaina Voz|r v" .. VERSION .. " cargado. Escribe |cffFFFFFF/voz|r para conectarte.")

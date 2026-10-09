@@ -1,13 +1,13 @@
-# 🔌 Especificación Técnica y API — WoWPeru_Voice
+# 🔌 Especificación Técnica y API — Wanos_Voice
 
-[![GitHub](https://img.shields.io/badge/GitHub-DarckRovert%2FWoWPeru_Voice-black?logo=github)](https://github.com/DarckRovert/WoWPeru_Voice)
-[![Ecosistema](https://img.shields.io/badge/Ecosistema-WoW%20Per%C3%BA%203.3.5a-gold.svg)](https://wow-peru.lat/)
+[![GitHub](https://img.shields.io/badge/GitHub-DarckRovert%2FWanos_Voice-black?logo=github)](https://github.com/DarckRovert/Wanos_Voice)
+[![Ecosistema](https://img.shields.io/badge/Ecosistema-WoW%20Per%C3%BA%203.3.5a-gold.svg)](https://worldofwanos.com/)
 
 ## 📌 Resumen Arquitectónico
-Sistema de comunicación por voz espacial 3D y proximidad en tiempo real basado en WebRTC para World of Warcraft 3.3.5a (Reino Andino). Calcula distancia euclidiana y ángulo tridimensional del emisor respecto al receptor.
+Sistema de comunicación por voz espacial 3D y proximidad en tiempo real basado en WebRTC para World of Warcraft 3.3.5a (Project Jaina). Calcula distancia euclidiana y ángulo tridimensional del emisor respecto al receptor.
 
 - **Rol en el Ecosistema:** Módulo Oficial #17 — Audio Espacial & WebRTC
-- **Archivo Principal TOC:** `WoWPeru_Voice.toc`
+- **Archivo Principal TOC:** `Wanos_Voice.toc`
 - **Compatibilidad del Motor:** World of Warcraft 3.3.5a (Build 12340)
 
 ---
@@ -30,11 +30,11 @@ Sistema de comunicación por voz espacial 3D y proximidad en tiempo real basado 
 ---
 
 ## 💾 Persistencia de Datos (SavedVariables)
-- `WoWPeruVozAjustes`: Almacenamiento estructurado de configuración y estado persistente.
+- `WanosVozAjustes`: Almacenamiento estructurado de configuración y estado persistente.
 
 ---
 
 ## 🛠️ Buenas Prácticas de Integración
 1. Toda invocación a funciones públicas debe verificar previamente la existencia del espacio de nombres en `_G`.
 2. Las tablas de configuración deben consultarse en modo lectura sin sobreescribir valores por omisión no validados.
-3. El intercambio de datos con otros addons debe efectuarse a través del bus oficial `WoWPeru_Companion` o hooks de eventos estándar.
+3. El intercambio de datos con otros addons debe efectuarse a través del bus oficial `Wanos_Companion` o hooks de eventos estándar.

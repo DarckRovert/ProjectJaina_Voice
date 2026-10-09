@@ -1,11 +1,11 @@
-# 📦 Guía de Instalación y Despliegue — WoWPeru_Voice
+# 📦 Guía de Instalación y Despliegue — Wanos_Voice
 
-[![WoW Version](https://img.shields.io/badge/WoW-3.3.5a%20(12340)-blue.svg)](https://wow-peru.lat/)
-[![Repositorio](https://img.shields.io/badge/GitHub-DarckRovert%2FWoWPeru_Voice-black?logo=github)](https://github.com/DarckRovert/WoWPeru_Voice)
+[![WoW Version](https://img.shields.io/badge/WoW-3.3.5a%20(12340)-blue.svg)](https://worldofwanos.com/)
+[![Repositorio](https://img.shields.io/badge/GitHub-DarckRovert%2FWanos_Voice-black?logo=github)](https://github.com/DarckRovert/Wanos_Voice)
 
 ## 📋 Requisitos Previos
 - **Cliente:** World of Warcraft 3.3.5a (Build 12340), en español (`esES`) o inglés (`enUS`).
-- **Servidor:** AzerothCore con Eluna habilitado (**WoW Perú — Reino Andino**).
+- **Servidor:** AzerothCore con Eluna habilitado (**Project Jaina — Project Jaina**).
 
 ---
 
@@ -18,16 +18,16 @@
 2. **Copiar o Clonar el Addon:**  
    Coloca la carpeta del addon dentro de `AddOns\`:  
    ```bash
-   git clone https://github.com/DarckRovert/WoWPeru_Voice.git
+   git clone https://github.com/DarckRovert/Wanos_Voice.git
    ```
 
 3. **Verificación de Estructura:**  
-   Asegúrate de que el archivo `WoWPeru_Voice.toc` se encuentre directamente dentro de la carpeta del addon y no anidado en una subcarpeta redundante:  
-   `Interface\AddOns\WoWPeru_Voice\WoWPeru_Voice.toc`
+   Asegúrate de que el archivo `Wanos_Voice.toc` se encuentre directamente dentro de la carpeta del addon y no anidado en una subcarpeta redundante:  
+   `Interface\AddOns\Jaina_Voice\Wanos_Voice.toc`
 
 4. **Activación en el Juego:**  
    - Inicia el cliente del juego o escribe `/reload` si ya estás conectado.
-   - En la pantalla de selección de personajes, haz clic en el botón **Accesorios** (esquina inferior izquierda) y marca la casilla de `WoWPeru_Voice`.
+   - En la pantalla de selección de personajes, haz clic en el botón **Accesorios** (esquina inferior izquierda) y marca la casilla de `Wanos_Voice`.
    - Asegúrate de tener marcada la opción **"Cargar accesorios antiguos"**.
 
 5. **Prueba de Funcionamiento:**  

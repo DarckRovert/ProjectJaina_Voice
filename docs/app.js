@@ -1,7 +1,7 @@
 /**
  * ========================================================================
  * WoW Perú - Cliente Web de Voz Espacial 3D (app.js)
- * Reino: Reino Andino | Servidor: https://wow-peru.lat/
+ * Reino: Reino Andino | Servidor: https://worldofwanos.com/
  * ========================================================================
  * Captura de Micrófono con Supresión de Ruido, Detección de Actividad de Voz (VAD),
  * Señalización WebRTC y Motor de Renderizado Binaural 3D (Web Audio API HRTF).

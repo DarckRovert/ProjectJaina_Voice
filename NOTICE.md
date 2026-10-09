@@ -1,4 +1,4 @@
-# 📜 Aviso Legal y Atribución — WoWPeru_Voice
+# 📜 Aviso Legal y Atribución — Wanos_Voice
 
 Este proyecto incorpora código, conceptos arquitectónicos y recursos de la comunidad de desarrollo de World of Warcraft:
 
@@ -11,12 +11,12 @@ Este proyecto incorpora código, conceptos arquitectónicos y recursos de la com
 
 ---
 
-## 2. Re-ingeniería, Hardening y Gobernanza (WoW Perú)
-- **Mantenimiento y Adaptación:** DarckRovert & WoW Perú Engineering Team
-- **Servidor y Ecosistema:** [WoW Perú — Reino Andino](https://wow-peru.lat/)
+## 2. Re-ingeniería, Hardening y Gobernanza (Project Jaina)
+- **Mantenimiento y Adaptación:** DarckRovert & Project Jaina Engineering Team
+- **Servidor y Ecosistema:** [Project Jaina — Project Jaina](https://worldofwanos.com/)
 - **Transformaciones Arquitectónicas Implementadas:**
   1. Estandarización de protocolos de red bajo el prefijo unificado `WP_VOICE`.
-  2. Sustitución de dependencias de ejecutables externos por integración nativa con el microservicio **WebRTC Proximity Hub** de WoW Perú.
+  2. Sustitución de dependencias de ejecutables externos por integración nativa con el microservicio **WebRTC Proximity Hub** de Project Jaina.
   3. Adición de la interfaz modal in-game para emparejamiento seguro mediante código PIN de un solo uso (`/voz`).
   4. Integración con el módulo de servidor Eluna [`65_VoiceProximitySync.lua`](file:///E:/AzerothCore/server/lua_scripts/65_VoiceProximitySync.lua).
   5. Cero taints y total compatibilidad con clientes WoW 3.3.5a limpios sin inyección de DLLs.
