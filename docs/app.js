@@ -1,7 +1,7 @@
 /**
  * ========================================================================
  * WoW Perú - Cliente Web de Voz Espacial 3D (app.js)
- * Reino: Reino Andino | Servidor: https://worldofwanos.com/
+ * Reino: Project Jaina | Servidor: https://projectjaina.com/
  * ========================================================================
  * Captura de Micrófono con Supresión de Ruido, Detección de Actividad de Voz (VAD),
  * Señalización WebRTC y Motor de Renderizado Binaural 3D (Web Audio API HRTF).
@@ -32,7 +32,7 @@ const customServerInput = document.getElementById('custom-server-input');
 
 function initServerSelector() {
     if (!serverSelect) return;
-    const saved = localStorage.getItem('wowperu_voice_server');
+    const saved = localStorage.getItem('projectjaina_voice_server');
     if (saved) {
         if (saved === 'http://193.84.88.26:3050' || saved === 'http://localhost:3050') {
             serverSelect.value = saved;
@@ -60,20 +60,20 @@ function initServerSelector() {
             }
         } else {
             if (customServerInput) customServerInput.style.display = 'none';
-            localStorage.setItem('wowperu_voice_server', serverSelect.value);
+            localStorage.setItem('projectjaina_voice_server', serverSelect.value);
         }
     });
 
     if (customServerInput) {
         customServerInput.addEventListener('input', () => {
             const val = customServerInput.value.trim();
-            if (val) localStorage.setItem('wowperu_voice_server', val);
+            if (val) localStorage.setItem('projectjaina_voice_server', val);
         });
     }
 }
 
 function getVoiceServerBaseUrl() {
-    const saved = localStorage.getItem('wowperu_voice_server');
+    const saved = localStorage.getItem('projectjaina_voice_server');
     if (saved) return saved.replace(/\/+$/, '');
     if (serverSelect && serverSelect.value !== 'custom') {
         return serverSelect.value.replace(/\/+$/, '');
