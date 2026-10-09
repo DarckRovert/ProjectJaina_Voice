@@ -22,7 +22,7 @@
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│               ARQUITECTURA DE VOZ ESPACIAL WOW PERÚ                    │
+│             ARQUITECTURA DE VOZ ESPACIAL PROJECT JAINA                 │
 ├────────────────────────┬──────────────────────┬────────────────────────┤
 │ 🔊 PLACAS Y RETRATOS   │ 🔗 VINCULACIÓN /VOZ  │ 🌐 WEBRTC BINAURAL     │
 │ Altavoces sobre placas │ Ventana modal con    │ Web Audio API con HRTF │
