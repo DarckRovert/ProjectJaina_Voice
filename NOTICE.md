@@ -1,22 +1,28 @@
 # 📜 Aviso Legal y Atribución — ProjectJaina_Voice
 
-Este proyecto incorpora código, conceptos arquitectónicos y recursos de la comunidad de desarrollo de World of Warcraft:
+Este repositorio forma parte del ecosistema oficial de **Project Jaina**.
+Contiene Superposición de chat de voz posicional 3D en tiempo real con motor HRTF, sincronizado con el microservicio WebRTC SFU en el puerto 3050. para el cliente World of Warcraft 3.3.5a (Build 12340).
 
 ---
 
-## 1. Arquitectura Base y Detección de Placas 3D
-- **Proyecto Origen:** PeruLand Voz
-- **Autoría Base:** Equipo de Desarrollo de PeruLand
-- **Aportes Asimilados:** Lógica de inspección por regiones de `WorldFrame` para detección anónima de Nameplates en 3.3.5a, resplandor en retratos y anclaje de texturas de altavoz sobre barras de vida.
+## 1. Autoría y Desarrollo Oficial
+* **Desarrollador Principal:** DarckRovert (Ingame: `Elnazzareno`) & Antigravity (Mythos 5)
+* **Ecosistema:** [Project Jaina Oficial](https://darckrovert.github.io/ProjectJaina_Web/)
+* **Repositorio Oficial:** [DarckRovert/ProjectJaina_Voice](https://github.com/DarckRovert/ProjectJaina_Voice)
 
 ---
 
-## 2. Re-ingeniería, Hardening y Gobernanza (Project Jaina)
-- **Mantenimiento y Adaptación:** DarckRovert & Project Jaina Engineering Team
-- **Servidor y Ecosistema:** [Project Jaina — Project Jaina](https://darckrovert.github.io/ProjectJaina_Web/)
-- **Transformaciones Arquitectónicas Implementadas:**
-  1. Estandarización de protocolos de red bajo el prefijo unificado `WP_VOICE`.
-  2. Sustitución de dependencias de ejecutables externos por integración nativa con el microservicio **WebRTC Proximity Hub** de Project Jaina.
-  3. Adición de la interfaz modal in-game para emparejamiento seguro mediante código PIN de un solo uso (`/voz`).
-  4. Integración con el módulo de servidor Eluna [`65_VoiceProximitySync.lua`](file:///E:/AzerothCore/server/lua_scripts/65_VoiceProximitySync.lua).
-  5. Cero taints y total compatibilidad con clientes WoW 3.3.5a limpios sin inyección de DLLs.
+## 2. Arquitectura y Protocolo Autoritativo
+* **Prefijo de Red:** `WP_VOICE`
+* **Integración Servidor:** `65_VoiceProximitySync.lua y voice_service/server.js`
+* **Variables Guardadas:** `ProjectJaina_VoiceDB`
+* **Comandos Slash:** `/voice, /pjvoice`
+
+---
+
+## 3. Cumplimiento de Políticas de Interfaz (Blizzard Custom UI Policy)
+En estricto cumplimiento de la Política de Interfaz de Usuario Personalizada de Blizzard Entertainment (2009):
+1. **Gratuito y Abierto:** Este software es completamente gratuito y de código abierto para la comunidad de jugadores.
+2. **Sin Alteración de Binarios:** No realiza ingeniería inversa, inyección de código ni altera binarios del juego (`WoW.exe`).
+3. **Aislamiento FrameXML:** Respeta el aislamiento de ejecución en FrameXML y no genera taint en subsistemas protegidos de combate.
+4. **Sin Publicidad ni Cobro:** No incluye anuncios publicitarios ni solicita compensación monetaria directa para el uso de sus funciones in-game.
