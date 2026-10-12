@@ -450,10 +450,10 @@ local function ManejarComando(argumento)
     MostrarEnlace("SOLICITANDO...", "https://darckrovert.github.io/ProjectJaina_Web/voz/")
 end
 
-SLASH_WANOSVOZ1 = "/voz"
-SLASH_WANOSVOZ2 = "/wanosvoz"
-SLASH_WANOSVOZ3 = "/wpvoz"
-SlashCmdList["WANOSVOZ"] = ManejarComando
+SLASH_PROJECTJAINA_VOZ1 = "/voz"
+SLASH_PROJECTJAINA_VOZ2 = "/jainavoz"
+SLASH_PROJECTJAINA_VOZ3 = "/pjvoz"
+SlashCmdList["PROJECTJAINA_VOZ"] = ManejarComando
 
 if DEFAULT_CHAT_FRAME then
     DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffProject Jaina Voz|r v" .. VERSION .. " cargado. Escribe |cffFFFFFF/voz|r para conectarte.")

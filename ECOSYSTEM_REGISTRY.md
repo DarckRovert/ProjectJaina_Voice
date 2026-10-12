@@ -44,7 +44,7 @@ Ficha técnica oficial de registro en la infraestructura multi-addon de **Projec
 |---|---|---|
 | **`ProjectJaina_Companion`** | Telemetría / Detección Social | Registrado en lista de presencia social de addons activos |
 | **`JainaCore (Eluna)`** | Cliente - Servidor Autoritativo | Backend `65_VoiceProximitySync.lua` vía telemetría asíncrona |
-| **`WebRTC Proximity Hub`** | Puente Web / Móvil | Señalización y paneo espacial 3D en `projectjaina.com/voz` |
+| **`WebRTC Proximity Hub`** | Puente Web / Móvil | Señalización y paneo espacial 3D en `darckrovert.github.io/ProjectJaina_Web/voz` |
 | **`Nameplates 3D`** | Renderizado No Invasivo | Detección anónima de barras de vida y anclaje de altavoces |
 
 ---
