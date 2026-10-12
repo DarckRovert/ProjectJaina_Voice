@@ -398,7 +398,7 @@ motor:SetScript("OnEvent", function(self, evento, a1, a2, ...)
             AplicarAjustes(true)
         end
     elseif ev == "CHAT_MSG_ADDON" then
-        if arg1 == PREFIJO then
+        if arg1 == PREFIJO or arg1 == "WP_VOICE" or arg1 == "JAINA_VOICE" then
             Procesar(arg2)
         end
     elseif ev == "PLAYER_ENTERING_WORLD" then
