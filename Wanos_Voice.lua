@@ -277,7 +277,7 @@ local function CrearVentanaEnlace()
     urlEdit:SetFontObject("GameFontHighlight")
     urlEdit:SetJustifyH("CENTER")
     urlEdit:SetAutoFocus(false)
-    urlEdit:SetText("https://darckrovert.github.io/ProjectJaina_Voice/")
+    urlEdit:SetText("https://darckrovert.github.io/ProjectJaina_Web/voz/")
     urlEdit:SetScript("OnEditFocusGained", function(self) self:HighlightText() end)
     urlEdit:SetScript("OnEscapePressed", function(self) self:ClearFocus() end)
 
@@ -327,10 +327,11 @@ local function Procesar(mensaje)
         return
     end
 
-    -- Formato PIN:123456:Project Jaina Oficialvoz
-    local _, _, pin, url = string.find(mensaje, "^PIN:(%d+):(.+)$")
+    -- Formato PIN:123456 o PIN:123456:URL
+    local _, _, pin, url = string.find(mensaje, "^PIN:(%d+):?(.*)$")
     if pin then
-        MostrarEnlace(pin, url)
+        local urlFinal = (url and url ~= "") and url or nil
+        MostrarEnlace(pin, urlFinal)
         DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffProject Jaina Voz|r: Tu código de emparejamiento es |cff00ff00" .. pin .. "|r.")
         return
     end
@@ -446,7 +447,7 @@ local function ManejarComando(argumento)
     if playerName then
         SendAddonMessage(PREFIJO, "GET_PIN", "WHISPER", playerName)
     end
-    MostrarEnlace("SOLICITANDO...", "https://darckrovert.github.io/ProjectJaina_Voice/")
+    MostrarEnlace("SOLICITANDO...", "https://darckrovert.github.io/ProjectJaina_Web/voz/")
 end
 
 SLASH_WANOSVOZ1 = "/voz"
