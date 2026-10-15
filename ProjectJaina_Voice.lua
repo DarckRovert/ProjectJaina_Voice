@@ -262,7 +262,8 @@ local function CrearVentanaEnlace()
 
     -- EditBox con URL
     local ebBg = CreateFrame("Frame", nil, f)
-    ebBg:SetSize(340, 28)
+    ebBg:SetWidth(340)
+    ebBg:SetHeight(28)
     ebBg:SetPoint("CENTER", f, "CENTER", 0, -32)
     ebBg:SetBackdrop({
         bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
@@ -289,7 +290,8 @@ local function CrearVentanaEnlace()
 
     -- Botón Cerrar
     local btnClose = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
-    btnClose:SetSize(110, 26)
+    btnClose:SetWidth(110)
+    btnClose:SetHeight(26)
     btnClose:SetPoint("BOTTOM", f, "BOTTOM", 0, 18)
     btnClose:SetText("Cerrar")
     btnClose:SetScript("OnClick", function() f:Hide() end)
