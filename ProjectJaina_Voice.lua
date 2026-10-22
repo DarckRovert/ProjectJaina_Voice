@@ -278,15 +278,15 @@ local function CrearVentanaEnlace()
     urlEdit:SetFontObject("GameFontHighlight")
     urlEdit:SetJustifyH("CENTER")
     urlEdit:SetAutoFocus(false)
-    urlEdit:SetText("https://darckrovert.github.io/ProjectJaina_Web/voz/")
+    urlEdit:SetText("https://localhost:3050")
     urlEdit:SetScript("OnEditFocusGained", function(self) self:HighlightText() end)
     urlEdit:SetScript("OnEscapePressed", function(self) self:ClearFocus() end)
 
-    -- Nota de cabinas
+    -- Nota de conexión y cabinas
     local tip = f:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
-    tip:SetPoint("BOTTOM", f, "BOTTOM", 0, 52)
+    tip:SetPoint("BOTTOM", f, "BOTTOM", 0, 48)
     tip:SetWidth(380)
-    tip:SetText("|cffFFD100Tip de Cabina:|r Si tu PC no tiene micrófono, abre el link en tu celular con audífonos y habla como si estuvieras dentro del mundo.")
+    tip:SetText("|cff00e5ffRecomendado PC:|r https://localhost:3050 (Nativo 100% fluido)\n|cffFFD100Web Oficial / Celular:|r https://darckrovert.github.io/ProjectJaina_Web/voz/")
 
     -- Botón Cerrar
     local btnClose = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
@@ -449,7 +449,7 @@ local function ManejarComando(argumento)
     if playerName then
         SendAddonMessage(PREFIJO, "GET_PIN", "WHISPER", playerName)
     end
-    MostrarEnlace("SOLICITANDO...", "https://darckrovert.github.io/ProjectJaina_Web/voz/")
+    MostrarEnlace("SOLICITANDO...", "https://localhost:3050")
 end
 
 SLASH_PROJECTJAINA_VOZ1 = "/voz"
