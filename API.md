@@ -1,7 +1,7 @@
 # 🔌 Especificación Técnica y API — ProjectJaina_Voice
 
 [![GitHub](https://img.shields.io/badge/GitHub-DarckRovert%2FProjectJaina_Voice-black?logo=github)](https://github.com/DarckRovert/ProjectJaina_Voice)
-[![Ecosistema](https://img.shields.io/badge/Ecosistema-WoW%20Per%C3%BA%203.3.5a-gold.svg)](https://darckrovert.github.io/ProjectJaina_Web/)
+[![Ecosistema](https://img.shields.io/badge/Ecosistema-Project%20Jaina%203.3.5a-gold.svg)](https://darckrovert.github.io/ProjectJaina_Web/)
 
 ## 📌 Resumen Arquitectónico
 Sistema de comunicación por voz espacial 3D y proximidad en tiempo real basado en WebRTC para World of Warcraft 3.3.5a (Project Jaina). Calcula distancia euclidiana y ángulo tridimensional del emisor respecto al receptor.

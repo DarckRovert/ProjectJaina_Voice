@@ -18,7 +18,7 @@
 
 ## 🌟 ¿Qué es ProjectJaina_Voice?
 
-**ProjectJaina_Voice** es el **módulo oficial #16** del ecosistema de addons de **Project Jaina - Project Jaina**. Proporciona una interfaz visual de alta fidelidad para la comunicación de voz espacial 3D y por proximidad dentro del cliente World of Warcraft 3.3.5a (Wrath of the Lich King), sincronizada con el backend **WebRTC Proximity Hub** de Project Jaina.
+**ProjectJaina_Voice** es el **módulo oficial #16** del ecosistema de addons de **Project Jaina**. Proporciona una interfaz visual de alta fidelidad para la comunicación de voz espacial 3D y por proximidad dentro del cliente World of Warcraft 3.3.5a (Wrath of the Lich King), sincronizada con el backend **WebRTC Proximity Hub** de Project Jaina.
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
