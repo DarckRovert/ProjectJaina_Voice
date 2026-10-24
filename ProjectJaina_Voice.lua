@@ -142,21 +142,42 @@ local function IconoDeMarco(marco, nombreMarco)
     return iconosUnidad[nombreMarco]
 end
 
+local function RegistrarPrefijosVoz()
+    if RegisterAddonMessagePrefix then
+        RegisterAddonMessagePrefix(PREFIJO)
+        RegisterAddonMessagePrefix("WP_VOICE")
+        RegisterAddonMessagePrefix("JAINA_VOICE")
+    end
+end
+RegistrarPrefijosVoz()
+
 local resplandorLocal
 
 local function ObtenerResplandor()
     if not resplandorLocal then
+        local retrato = getglobal("PlayerPortrait") or PlayerFrame
+        local ancho = 56
+        if retrato and retrato.GetWidth and retrato:GetWidth() > 0 then
+            ancho = retrato:GetWidth()
+        end
+        local alto = 56
+        if retrato and retrato.GetHeight and retrato:GetHeight() > 0 then
+            alto = retrato:GetHeight()
+        end
+
         local capa = CreateFrame("Frame", nil, PlayerFrame)
         capa:SetFrameLevel(PlayerFrame:GetFrameLevel() + 4)
-        capa:SetAllPoints(getglobal("PlayerPortrait") or PlayerFrame)
+        capa:SetWidth(ancho)
+        capa:SetHeight(alto)
+        capa:SetPoint("CENTER", retrato, "CENTER", 0, 0)
 
         local t = capa:CreateTexture(nil, "OVERLAY")
         t:SetTexture("Interface\\Buttons\\UI-ActionButton-Border")
         t:SetBlendMode("ADD")
         t:SetVertexColor(0.2, 0.9, 0.2)
         t:SetPoint("CENTER", capa, "CENTER", 0, 0)
-        t:SetWidth(capa:GetWidth() * 2.1)
-        t:SetHeight(capa:GetHeight() * 2.1)
+        t:SetWidth(ancho * 1.85)
+        t:SetHeight(alto * 1.85)
 
         capa:Hide()
         resplandorLocal = capa
@@ -198,15 +219,33 @@ local function RepasarMarcos()
     algunIconoEnMarcos = true
     RepasarUnidad("PlayerFrame", "player")
     RepasarUnidad("TargetFrame", "target")
+    RepasarUnidad("FocusFrame", "focus")
 
     for i = 1, 4 do
         RepasarUnidad("PartyMemberFrame" .. i, "party" .. i)
     end
 
-    for i = 1, 40 do
-        local nombreMarco = "RaidGroupButton" .. i
-        if getglobal(nombreMarco) then
-            RepasarUnidad(nombreMarco, "raid" .. i)
+    local numRaid = (GetNumRaidMembers and GetNumRaidMembers()) or 0
+    if numRaid > 0 then
+        for i = 1, numRaid do
+            local raidUnit = "raid" .. i
+            -- 1. ProjectJaina_RaidSuite (JainaRaidRow)
+            local jainaRow = "JainaRaidRow" .. i
+            if getglobal(jainaRow) then
+                RepasarUnidad(jainaRow, raidUnit)
+            end
+            -- 2. CompactRaidFrame
+            local compactFrame = "CompactRaidFrame" .. i
+            if getglobal(compactFrame) then
+                RepasarUnidad(compactFrame, raidUnit)
+            end
+            -- 3. Blizzard Raid Group Slots
+            local g = math.floor((i - 1) / 5) + 1
+            local s = ((i - 1) % 5) + 1
+            local slotFrame = "RaidGroup" .. g .. "Slot" .. s
+            if getglobal(slotFrame) then
+                RepasarUnidad(slotFrame, raidUnit)
+            end
         end
     end
 end
@@ -404,6 +443,7 @@ motor:SetScript("OnEvent", function(self, evento, a1, a2, ...)
             Procesar(arg2)
         end
     elseif ev == "PLAYER_ENTERING_WORLD" then
+        RegistrarPrefijosVoz()
         hablando = {}
     end
 end)
