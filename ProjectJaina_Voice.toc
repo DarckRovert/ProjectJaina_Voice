@@ -1,8 +1,9 @@
 ## Interface: 30300
+## Version: 1.0.2
 ## Title: |cff00ccffProject Jaina|r Voz
 ## Notes: Sistema visual de voz espacial 3D y proximidad para Project Jaina.
 ## Author: DarckRovert & Antigravity (Mythos 5)
-## Version: 1.0.1
+## Version: 1.0.2
 ## SavedVariablesPerCharacter: ProjectJaina_Voice_Settings
 ## X-Category: Audio & Voice
 ## X-Website: https://darckrovert.github.io/ProjectJaina_Web/
