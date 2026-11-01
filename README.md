@@ -2,9 +2,9 @@
   <img src="https://raw.githubusercontent.com/DarckRovert/ProjectJaina_Web/main/images/project_jaina_official_logo.jpg" alt="Project JAIna Official Crest" width="180">
 </p>
 
-# ❄️ Project Jaina — Voz Espacial 3D & Proximidad (v1.0.0)
+# ❄️ Project Jaina — Voz Espacial 3D & Proximidad (v1.0.2)
 
-**Versión:** 1.0.0 (WotLK 3.3.5a WebRTC Proximity Edition)  
+**Versión:** 1.0.2 (WotLK 3.3.5a WebRTC Proximity Edition)  
 **Autor:** DarckRovert & Antigravity (Mythos 5)  
 **Servidor Destino:** [Project Jaina](https://darckrovert.github.io/ProjectJaina_Web/) — Project Jaina  
 **Entorno de Ejecución:** World of Warcraft 3.3.5a (Build 12340) | Lua 5.1 / Eluna C++  
