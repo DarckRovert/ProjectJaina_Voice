@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/DarckRovert/ProjectJaina_Web/main/images/project_jaina_official_logo.jpg" alt="Project JAIna Official Crest" width="180">
+</p>
+
 # ❄️ Project Jaina — Voz Espacial 3D & Proximidad (v1.0.0)
 
 **Versión:** 1.0.0 (WotLK 3.3.5a WebRTC Proximity Edition)  
