@@ -10,8 +10,9 @@
 ]]
 
 local ADDON_NAME = "ProjectJaina_Voice"
-local VERSION = "1.0.1"
+local VERSION = "1.0.2"
 local PREFIJO = "WP_VOICE"
+local DEFAULT_VOICE_URL = "https://darckrovert.github.io/ProjectJaina_Web/voz/"
 local TIEMPO_VIDA = 2.5       -- Segundos sin paquete de refresco antes de apagar altavoz
 local REFRESCO = 0.1          -- Tasa de muestreo de placas y marcos (10 Hz)
 local TAMANO_ICONO = 28
@@ -317,7 +318,7 @@ local function CrearVentanaEnlace()
     urlEdit:SetFontObject("GameFontHighlight")
     urlEdit:SetJustifyH("CENTER")
     urlEdit:SetAutoFocus(false)
-    urlEdit:SetText("https://darckrovert.github.io/ProjectJaina_Web/voz/")
+    urlEdit:SetText(DEFAULT_VOICE_URL)
     urlEdit:SetScript("OnEditFocusGained", function(self) self:HighlightText() end)
     urlEdit:SetScript("OnEscapePressed", function(self) self:ClearFocus() end)
 
@@ -325,7 +326,7 @@ local function CrearVentanaEnlace()
     local tip = f:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
     tip:SetPoint("BOTTOM", f, "BOTTOM", 0, 48)
     tip:SetWidth(380)
-    tip:SetText("|cff00e5ffWeb Oficial / Móvil:|r https://darckrovert.github.io/ProjectJaina_Web/voz/\n|cffaaaaaa(Host Local de Pruebas: https://localhost:3050)|r")
+    tip:SetText("|cff00e5ffWeb Oficial / Móvil:|r " .. DEFAULT_VOICE_URL .. "\n|cffaaaaaa(Copia el enlace en tu navegador o móvil para sincronizar el audio)|r")
 
     -- Botón Cerrar
     local btnClose = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
@@ -371,7 +372,7 @@ local function Procesar(mensaje)
     -- Formato PIN:123456 o PIN:123456:URL
     local _, _, pin, url = string.find(mensaje, "^PIN:(%d+):?(.*)$")
     if pin then
-        local urlFinal = (url and url ~= "") and url or "https://darckrovert.github.io/ProjectJaina_Web/voz/"
+        local urlFinal = (url and url ~= "") and url or DEFAULT_VOICE_URL
         MostrarEnlace(pin, urlFinal)
         DEFAULT_CHAT_FRAME:AddMessage("|cff00ccffProject Jaina Voz|r: Tu código de emparejamiento es |cff00ff00" .. pin .. "|r.")
         return
@@ -489,7 +490,7 @@ local function ManejarComando(argumento)
     if playerName then
         SendAddonMessage(PREFIJO, "GET_PIN", "WHISPER", playerName)
     end
-    MostrarEnlace("SOLICITANDO...", "https://localhost:3050")
+    MostrarEnlace("SOLICITANDO...", DEFAULT_VOICE_URL)
 end
 
 SLASH_PROJECTJAINA_VOZ1 = "/voz"
